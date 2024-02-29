@@ -7,6 +7,7 @@ const app=express()
 const server_config=require('./configs/server.config.js')  //taken server.config file module-------------
 const db_config=require("./configs/db.config.js")
 
+
 /**
  * create an admin user at the starting of the application
  * if not already present
