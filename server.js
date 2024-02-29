@@ -6,6 +6,7 @@ const mongoose =require('mongoose')
 const app=express()
 const server_config=require('./configs/server.config.js')  //taken server.config file module-------------
 const db_config=require("./configs/db.config.js")
+const user_model=require('./model/user.model.js')
 
 
 /**
@@ -24,7 +25,16 @@ db.on("error",()=>{
 
 db.once("open",()=>{
     console.log("connected to mongodb")
+    init()
 })
+
+async function init(){
+    const user=await user_model.findOne({userId:"admin"})  //if i want to wait at this point ,then i will have to use "await" keyword here--
+
+    if(user){
+        console.log()
+    }
+}
 
 /**
  * start the server
