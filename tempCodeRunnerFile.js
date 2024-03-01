@@ -1,0 +1,1 @@
+becrypt.hashSync("welcome1",8)

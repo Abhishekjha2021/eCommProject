@@ -6,12 +6,14 @@ const app=express()             //part 2------------------
 const server_config=require('./configs/server.config.js')  //taken server.config file module-------------i.e PORT value--------
 
 //for encryptining the password--
-const becrypt=require('bcryptjs')
+const becrypt=require('bcryptjs')  
 
 //come to db part---------------------------------
 const mongoose =require('mongoose')
 const db_config=require("./configs/db.config.js")
 const user_model=require('./model/user.model.js')
+
+app.use(express.json())   //middleware-------------------whenever receive a json read it as js object ----------
 
 
 
@@ -50,9 +52,10 @@ async function init(){
             userId:"admin",
             email:"abhi34@gmail.com",
             userType:"ADMIN",    //make sure to take value in the same way as taken in model part.i.e capital letter or small letter---------
-            
+
            // password:"abhi4587gh"    //here we are using direct string type of password i.e we are not encrypting password .so make sure to use becryptjs for encrypting the password---
-            password:becrypt.hashSync("welcome1",8)   //here 8 is the hash of the "welcome1"------------
+            password:becrypt.hashSync("welcome1",8)   //here 8 is the hash of the "welcome1"------------and 8 is called salt ------
+            //salt based hashing-----when a normal password is encrypted with the help of any value either it is a number or string (k/a salt),to enhance the security------
         })
         console.log("Admin created",user)
 
@@ -60,6 +63,11 @@ async function init(){
         console.log("error while creating admin",err)
     }
 }
+
+/**
+ * stich the route to the server---------
+ */
+require('./routes/auth.routes.js')(app)  //calling routes and passing app object in it--------------
 
 /**
  * start the server  ...part 3------------------------
