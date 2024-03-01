@@ -1,6 +1,6 @@
 const mongoose=require('mongoose')
 
-const userSchema=mangoose.Schema({
+const userSchema=mongoose.Schema({
     name:{
         type:String,
         required:true
@@ -8,7 +8,7 @@ const userSchema=mangoose.Schema({
     userId:{
         type:String,
         required:true,
-        unique:true
+        unique:true    //i.e no two users can have same userId-----------
     },
     password:{
         type:String,
@@ -19,7 +19,7 @@ const userSchema=mangoose.Schema({
         required:true,
         lowercase:true,
         minLength:10,
-        unique:true      //so that no two users can use the same email----------
+        unique:true      //so that no two users can have the same email----------
     },
     userType:{
         type:String,

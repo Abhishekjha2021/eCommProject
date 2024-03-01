@@ -1,12 +1,18 @@
 /**
  * this will be the starting file of the project---------------
  */
-const express=require('express')
+const express=require('express')    //part 1-----------
+const app=express()             //part 2------------------
+const server_config=require('./configs/server.config.js')  //taken server.config file module-------------i.e PORT value--------
+
+//for encryptining the password--
+const becrypt=require('bcryptjs')
+
+//come to db part---------------------------------
 const mongoose =require('mongoose')
-const app=express()
-const server_config=require('./configs/server.config.js')  //taken server.config file module-------------
 const db_config=require("./configs/db.config.js")
 const user_model=require('./model/user.model.js')
+
 
 
 /**
@@ -29,17 +35,36 @@ db.once("open",()=>{
 })
 
 async function init(){
-    const user=await user_model.findOne({userId:"admin"})  //if i want to wait at this point ,then i will have to use "await" keyword here--
+    let user=await user_model.findOne({userId:"admin"})  //if i want to wait at this point ,then i will have to use "await" keyword here--
+    //here we are taking user of "let" type ,bcz agar upper wala part nhi chala to hum nicche wala part bnayenge (try---catch) so user ko dobara 
+    //define krna pd rha hai,so hum user ko let type ka le rhe hai const ka nhi ------------------------
 
     if(user){
-        console.log()
+        console.log("Admin is already present")
+        return 
+    };
+    //agar uper wala part run hua to theek hai agar nhi chala to fir i am going to create it ,jo ki nicche dia gya hai-------
+    try{
+        user=await user_model.create({
+            name:"abhi",
+            userId:"admin",
+            email:"abhi34@gmail.com",
+            userType:"ADMIN",    //make sure to take value in the same way as taken in model part.i.e capital letter or small letter---------
+            
+           // password:"abhi4587gh"    //here we are using direct string type of password i.e we are not encrypting password .so make sure to use becryptjs for encrypting the password---
+            password:becrypt.hashSync("welcome1",8)   //here 8 is the hash of the "welcome1"------------
+        })
+        console.log("Admin created",user)
+
+    }catch(err){
+        console.log("error while creating admin",err)
     }
 }
 
 /**
- * start the server
+ * start the server  ...part 3------------------------
  */
 app.listen(server_config.PORT,()=>{               //as this port no. is customizable i.e it might change. so anything which is customizatable,it's not a good 
-                                    //practice to write it here.ideally we must put it customizable values somewhere else,it should be all centralized.so make a folder and put it there.i.e config folder--
+                                    //practice to write it here. ideally we must put customizable values somewhere else,it should be all centralized.so make a folder and put it there.i.e config folder--
     console.log("server started at port number:",server_config.PORT) //server_config ke PORT ko access kr rhe h----
 })
