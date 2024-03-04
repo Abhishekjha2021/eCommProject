@@ -13,7 +13,9 @@ const mongoose =require('mongoose')
 const db_config=require("./configs/db.config.js")
 const user_model=require('./model/user.model.js')
 
-app.use(express.json())   //middleware-------------------whenever receive a json read it as js object ----------
+app.use(express.json())   //middleware-------------------whenever receive a json ,read it as js object ----------
+//it will convert json file ,received from the user during signup process(through postman) to js object file,so that vs code can understand it..
+//bcz vs code willn't directly understand the request which is in json.
 
 
 
@@ -50,7 +52,7 @@ async function init(){
     }catch(err){
         console.log("Error while connecting thedata",err)
     }
-    
+
     //agar uper wala part run hua to theek hai agar nhi chala then i am going to create it ,jo ki nicche dia gya hai-------
     try{
         user=await user_model.create({
