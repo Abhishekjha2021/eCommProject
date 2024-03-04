@@ -24,12 +24,13 @@ const userSchema=mongoose.Schema({
     userType:{
         type:String,
         required:true,
-        default:"CUSTOMER",
+        default:"CUSTOMER",     //default user is customer------------
+
         enum:["CUSTOMER","ADMIN"]     //only two type of user can be,either customer or admin--------------
     }
 
     
 
-},{timestamp:true,versionKey:false})
+},{timestamp:true,versionKey:false})    //if we want to give timestamp and want to remove versionKey(jo mongoose apne aap add kr deta hai)--------
 
 module.exports=mongoose.model("User",userSchema)  //it will create a collection named as "Users" with a document "userSchema"  in it.......here the collection formed will be plural i.e "Users" automatically-------- 
