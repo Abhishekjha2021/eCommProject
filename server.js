@@ -85,3 +85,12 @@ app.listen(server_config.PORT,()=>{               //as this port no. is customiz
                                     //practice to write it here. ideally we must put customizable values somewhere else,it should be all centralized.so make a folder and put it there.i.e config folder--
     console.log("server started at port number:",server_config.PORT) //server_config ke PORT ko access kr rhe h----
 })
+
+
+//localhost:8888/eComm/api/v1/auth/signUp
+/*{
+    "name":"abhia",
+    "email":"jdvcb@1511",
+    "password":"jdbj13551",
+    "userId":"abi0758"
+}*/
