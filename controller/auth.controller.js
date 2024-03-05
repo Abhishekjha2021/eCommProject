@@ -2,7 +2,7 @@
  * i need to write the controller / logic to register a user--
  */
 
-const becrypt=require('bcryptjs')
+const bcrypt=require('bcryptjs')
 
 //model and controller ka connection ho rha hai yha----
 const user_model=require('../model/user.model.js')   //note two times (.) .here and in routes section also--        
@@ -19,7 +19,7 @@ exports.signup=async (req,res)=>{
         name:request_body.name,
         userId:request_body.userId,
         email:request_body.email,
-        password: becrypt.hashSync(request_body.password,8)
+        password: bcrypt.hashSync(request_body.password,8)
     }
 
     try{
