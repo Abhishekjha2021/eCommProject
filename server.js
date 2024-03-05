@@ -78,6 +78,8 @@ async function init(){
  */
 require('./routes/auth.routes.js')(app)  //calling routes and passing app object in it--------------  
 
+//stich the category part to the server--
+require('./routes/category.route.js')(app)
 /**
  * start the server  ...part 3------------------------
  */
@@ -94,3 +96,4 @@ app.listen(server_config.PORT,()=>{               //as this port no. is customiz
     "password":"jdbj13551",
     "userId":"abi0758"
 }*/
+

@@ -8,7 +8,7 @@ const userSchema=mongoose.Schema({
     userId:{
         type:String,
         required:true,
-        unique:true    //i.e no two users can have same userId-----------
+        //unique:true    //i.e no two users can have same userId-----------
     },
     password:{
         type:String,

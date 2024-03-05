@@ -4,6 +4,10 @@
 
 const bcrypt=require('bcryptjs')
 
+const jwt=require('jsonwebtoken')       //for generating the tokens after login is done ----------
+
+const secret=require('../configs/auth.config.js')  //for accesing centalized secret value of jwt token----------
+
 //model and controller ka connection ho rha hai yha----
 const user_model=require('../model/user.model.js')   //note two times (.) .here and in routes section also--        
 exports.signup=async (req,res)=>{
@@ -51,5 +55,42 @@ exports.signup=async (req,res)=>{
 
 
     //3.return the response back to the user
+
+}
+
+//code for login of user (after signup)---------------
+exports.signin=async (req,res)=>{
+    const user=await user_model.findOne({userId:req.body.userId})
+
+    //check if the userId is present in the system-------------
+    if(user==null){
+        return res.status(400).send({
+            message:"passed userid isn't valid"
+        })
+    }
+
+    //check password is correct or not------------
+    const isPasswordValid=bcrypt.compareSync(req.body.password,user.password)  //here as the password provided by user is encrypted so how to compare the password during 
+    //the login time . so bcrypt gives us a fascility of compareSync by which we can comapre an encrypted or non-encrypted password----
+    if(!isPasswordValid){
+        return res.status(401).send({
+            message:"wrong password passed"
+        })
+    }
+
+    //now after authentication of user we will generate the jwt tokens---
+    const token=jwt.sign({id:user.userId},secret.secret,{     //here we have to give 3 things ..(1)koi data dena hoga jiske basis pe token generate krna hai eg-userId or password.
+        //(2) give some secret code jiske basis pe token generate krn ahai .yha wo code "My xyz secret" hai....
+        expiresIn:120  //(3) time period ki kitne der tak ye token valid rhega ----------
+    })
+
+    res.status(201).send({
+        name:user.name,
+        userId:user.userId,
+        email:user.email,
+        userType:user.userType,
+        accessToken:token
+
+    })
 
 }
