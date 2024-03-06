@@ -22,6 +22,7 @@ exports.createNewCategory=async (req,res)=>{
     //insert into mongodb
     try{
         const category=await category_model.create(cat_data)
+        
         return res.status(201).send(category)
     }catch(err){
         console.log("Error while creating the category",err)

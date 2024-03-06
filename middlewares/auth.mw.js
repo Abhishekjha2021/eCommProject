@@ -34,6 +34,14 @@ const verifySignUpBody=async (req,res,next)=>{
             })
         }
 
+        if(!req.body.password){        //if the userId is not provided-----
+            return res.status(400).send({
+                message:"password isn't provided"
+            })
+        }
+
+        next()      //don't forget it .......used to send the command to the next MW-------------------
+
 
     }catch(err){
         console.log("Error while validating the request object",err)
@@ -41,8 +49,12 @@ const verifySignUpBody=async (req,res,next)=>{
             message:"Error while validating the request body"
         })
     }
+    
 }
 
+// const verifyToken=(req,res,next)=>{
+    
+// }
 module.exports={
     verifySignUpBody:verifySignUpBody
 }

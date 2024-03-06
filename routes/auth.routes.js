@@ -9,7 +9,7 @@ const authController=require('../controller/auth.controller.js')     //routes an
 
 const authMW=require("../middlewares/auth.mw.js")   //connecting with middleware-----------
 
-module.exports=(app)=>{
+module.exports=(app)=>{  //(app) means connecting the route to the server---and if the post call is correct then handover the request to the signup part of the controller----
     app.post("/eComm/api/v1/auth/signUp",[authMW.verifySignUpBody] ,authController.signup)  //if the given URI is confirmed then give the control to the controller--------
 
     //code for signin----------

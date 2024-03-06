@@ -18,7 +18,7 @@ exports.signup=async (req,res)=>{
     //1.Read the request body
     const request_body=req.body  //req.body is predefined .it will give me the request body-----
 
-    //2.insert the data in the users collection in mongodb
+    //2.insert the data in the users collection in mongodb----------------
     const userObj={
         name:request_body.name,
         userId:request_body.userId,
@@ -65,13 +65,13 @@ exports.signin=async (req,res)=>{
     //check if the userId is present in the system-------------
     if(user==null){
         return res.status(400).send({
-            message:"passed userid isn't valid"
+            message:"passed userId isn't valid"
         })
     }
 
     //check password is correct or not------------
     const isPasswordValid=bcrypt.compareSync(req.body.password,user.password)  //here as the password provided by user is encrypted so how to compare the password during 
-    //the login time . so bcrypt gives us a fascility of compareSync by which we can comapre an encrypted or non-encrypted password----
+    //the login time . so bcrypt gives us a fascility of compareSync by which we can comapre an encrypted(password given by user during signup time which is now encrypted due to bcrypt) or non-encrypted password(password given by user during signin)----
     if(!isPasswordValid){
         return res.status(401).send({
             message:"wrong password passed"

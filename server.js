@@ -48,7 +48,7 @@ async function init(){
 
         if(user){
             console.log("Admin is already present")
-            return 
+            return     // return no further code will run here-------------
         }
     }catch(err){
         console.log("Error while connecting thedata",err)
@@ -74,11 +74,11 @@ async function init(){
 }
 
 /**
- * stich the route to the server---------
+ * stich the auth part of route to the server---------
  */
 require('./routes/auth.routes.js')(app)  //calling routes and passing app object in it--------------  
 
-//stich the category part to the server--
+//stich the category part of route to the server--
 require('./routes/category.route.js')(app)
 /**
  * start the server  ...part 3------------------------
