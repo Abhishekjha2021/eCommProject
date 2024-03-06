@@ -52,9 +52,22 @@ const verifySignUpBody=async (req,res,next)=>{
     
 }
 
-// const verifyToken=(req,res,next)=>{
-    
-// }
+const verifySignInBody=(req,res,next)=>{
+    if(!req.body.userId){
+        return res.status(400).send({
+            message:"usedId isn't provided"
+        })
+    }
+
+    if(!req.body.password){
+        return res.status(400).send({
+            message:"password isn't provided"
+        })
+    }
+
+    next()
+}
 module.exports={
-    verifySignUpBody:verifySignUpBody
+    verifySignUpBody:verifySignUpBody,
+    verifySignInBody:verifySignInBody
 }

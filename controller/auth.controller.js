@@ -84,7 +84,7 @@ exports.signin=async (req,res)=>{
         expiresIn:120  //(3) time period ki kitne der tak ye token valid rhega ----------
     })
 
-    res.status(201).send({
+    res.status(200).send({
         name:user.name,
         userId:user.userId,
         email:user.email,
