@@ -4,9 +4,13 @@
 
 const user_model=require('../model/user.model.js')
 
+const jwt=require('jsonwebtoken')       //required for validating the token-------------------
+
+const auth_config=require('../configs/auth.config.js')   //during validating the token ,we also need of "secret" of token -------------
+
 const verifySignUpBody=async (req,res,next)=>{
     try{
-        //check for the name
+        //check for the name-----------
         if(!req.body.name){     //if the name is not provided------
             return res.status(400).send({
                 message:"Failed ! Name was not provied in request body"
@@ -67,7 +71,54 @@ const verifySignInBody=(req,res,next)=>{
 
     next()
 }
+
+const verifyToken=(req,res,next)=>{
+    //check if the Token is present in the header-----------
+    const token=req.headers['x-access-token']
+
+    if(!token){
+        return res.status(403).send({
+            message:"No token found : UnAuthorized"
+        })
+    }
+
+    //if the token is present then check it's valid or not-----
+    jwt.verify(token,auth_config.secret,async (err,decoded)=>{
+        if(err){
+            return res.status(401).send({
+                message:"UnAuthorized"
+            })
+        }
+
+        const user=await user_model.findOne({userId:decoded.id})  //the token which was generated on the basis of userId ,was encrypted with a secret message..so here we are decoding it-------
+        if(!user){
+            return res.status(400).send({
+                message:"UnAuthorized,this user for this token doesn't exists"
+            })
+        }
+
+        //set the user info in the req body----
+        req.user=user
+        
+        next() //go to the next MW part----------------
+    })
+    
+}
+
+const isAdmin=(req,res,next)=>{
+    const user=req.user
+
+    if(user && user.userType=="ADMIN"){
+        next()
+    }else{
+        return res.status(403).send({
+            message:"Only Admin users are allowed to access this endpoint"
+        })
+    }
+}
 module.exports={
     verifySignUpBody:verifySignUpBody,
-    verifySignInBody:verifySignInBody
+    verifySignInBody:verifySignInBody,
+    verifyToken:verifyToken,
+    isAdmin:isAdmin
 }

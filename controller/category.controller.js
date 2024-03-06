@@ -31,5 +31,5 @@ exports.createNewCategory=async (req,res)=>{
         })
     }
 
-    //retur the response of the created category
+    //return the response of the created category---------
 }

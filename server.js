@@ -80,6 +80,8 @@ require('./routes/auth.routes.js')(app)  //calling routes and passing app object
 
 //stich the category part of route to the server--
 require('./routes/category.route.js')(app)
+
+
 /**
  * start the server  ...part 3------------------------
  */
