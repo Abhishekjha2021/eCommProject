@@ -9,8 +9,9 @@ const server_config=require('./configs/server.config.js')  //taken server.config
 const bcrypt=require('bcryptjs')  
 
 
-//come to db part---------------------------------
+//come to database part---------------------------------
 const mongoose =require('mongoose')
+
 const db_config=require("./configs/db.config.js")
 const user_model=require('./model/user.model.js')
 
