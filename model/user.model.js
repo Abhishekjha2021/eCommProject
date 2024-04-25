@@ -19,7 +19,7 @@ const userSchema=mongoose.Schema({
         required:true,
         lowercase:true,
         minLength:10,
-        unique:true      //so that no two users can have the same email----------
+        unique:true      //so that,no two users can have the same email----------
     },
     userType:{
         type:String,
