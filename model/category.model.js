@@ -20,3 +20,4 @@ const categorySchema=new mongoose.Schema({
 
 
 module.exports=mongoose.model("category",categorySchema)  //system will automatically make collection plural--------
+//here "model" is a method which takes 2 parameters, 1.new collection name and 2.kiske basis pe schema bnana hai -----------
